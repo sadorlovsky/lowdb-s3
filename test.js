@@ -1,5 +1,6 @@
 const test = require('ava')
 const lowdb = require('lowdb')
+const AWSMock = require('aws-sdk-mock')
 const { S3, Endpoint } = require('aws-sdk')
 const S3Adapter = require('.')
 
@@ -62,4 +63,18 @@ test('write', async t => {
   const data = await db.getState()
   const expected = { chats: [{ id: 3, title: 'three' }] }
   t.deepEqual(data, expected)
+})
+
+test('no bucket', async t => {
+  AWSMock.mock('S3', 'headBucket', null)
+
+  await t.throwsAsync(async () => {
+    const adapter = new S3Adapter({ bucket, key }, minio)
+    const db = await lowdb(adapter)
+
+    const defaultData = { chats: [] }
+    await db.defaults(defaultData).write()
+  }, { message: 'no bucket' })
+
+  AWSMock.restore('S3')
 })

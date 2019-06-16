@@ -1,5 +1,5 @@
 const Base = require('lowdb/adapters/Base')
-const { S3, Endpoint } = require('aws-sdk')
+const AWS = require('aws-sdk')
 
 class S3Adapter extends Base {
   constructor (source = {}, S3Options = {}) {
@@ -9,8 +9,8 @@ class S3Adapter extends Base {
       signatureVersion: 'v4',
       s3ForcePathStyle: true
     }
-    S3Options.endpoint = new Endpoint(S3Options.endpoint)
-    this.s3 = new S3(Object.assign({}, defaultS3Options, S3Options))
+    S3Options.endpoint = new AWS.Endpoint(S3Options.endpoint)
+    this.s3 = new AWS.S3(Object.assign({}, defaultS3Options, S3Options))
   }
 
   async read () {
