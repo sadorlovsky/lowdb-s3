@@ -1,5 +1,5 @@
 {
-  "name": "lowdb-s3",
+  "name": "@sadorlovsky/lowdb-s3",
   "version": "1.0.0",
   "description": "Lowdb AWS S3 Adapter",
   "license": "MIT",
