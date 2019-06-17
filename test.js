@@ -1,36 +1,29 @@
+const fs = require('fs')
 const test = require('ava')
 const lowdb = require('lowdb')
 const AWSMock = require('aws-sdk-mock')
-const { S3, Endpoint } = require('aws-sdk')
 const S3Adapter = require('.')
 
-const minio = {
-  accessKeyId: 'minio',
-  secretAccessKey: 'miniosecret',
-  endpoint: new Endpoint('http://localhost:9000')
-}
-
-const bucket = 'hardcode'
+const bucket = 'bucketName'
 const key = 'db.json'
+const tmp = `/tmp/${key}`
 
-const s3 = new S3({
-  region: 'us-east-1',
-  signatureVersion: 'v4',
-  s3ForcePathStyle: true,
-  ...minio
+test.before(async t => {
+  fs.writeFileSync(tmp, '{}')
+  AWSMock.mock('S3', 'headBucket', true)
+  AWSMock.mock('S3', 'getObject', { Body: Buffer.from(fs.readFileSync(tmp)) })
+  AWSMock.mock('S3', 'upload', (params, cb) => {
+    fs.writeFileSync(tmp, params.Body)
+    return cb()
+  })
 })
 
-const clear = () => s3.deleteObject({
-  Bucket: bucket,
-  Key: key
-}).promise()
-
-test.before(clear)
-test.beforeEach(clear)
-test.after(clear)
+test.beforeEach(t => {
+  fs.writeFileSync(tmp, '{}')
+})
 
 test('default values', async t => {
-  const adapter = new S3Adapter({ bucket, key }, minio)
+  const adapter = new S3Adapter({ bucket, key })
   const db = await lowdb(adapter)
 
   const defaultData = { chats: [{ id: 1, title: 'one' }] }
@@ -41,7 +34,7 @@ test('default values', async t => {
 })
 
 test('read', async t => {
-  const adapter = new S3Adapter({ bucket, key }, minio)
+  const adapter = new S3Adapter({ bucket, key })
   const db = await lowdb(adapter)
 
   const defaultData = { chats: [{ id: 2, title: 'two' }] }
@@ -53,7 +46,7 @@ test('read', async t => {
 })
 
 test('write', async t => {
-  const adapter = new S3Adapter({ bucket, key }, minio)
+  const adapter = new S3Adapter({ bucket, key })
   const db = await lowdb(adapter)
 
   const defaultData = { chats: [] }
@@ -66,10 +59,11 @@ test('write', async t => {
 })
 
 test('no bucket', async t => {
+  AWSMock.restore('S3')
   AWSMock.mock('S3', 'headBucket', null)
 
   await t.throwsAsync(async () => {
-    const adapter = new S3Adapter({ bucket, key }, minio)
+    const adapter = new S3Adapter({ bucket, key })
     const db = await lowdb(adapter)
 
     const defaultData = { chats: [] }

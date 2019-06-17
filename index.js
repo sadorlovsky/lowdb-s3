@@ -9,7 +9,9 @@ class S3Adapter extends Base {
       signatureVersion: 'v4',
       s3ForcePathStyle: true
     }
-    S3Options.endpoint = new AWS.Endpoint(S3Options.endpoint)
+    if (S3Options.endpoint) {
+      S3Options.endpoint = new AWS.Endpoint(S3Options.endpoint)
+    }
     this.s3 = new AWS.S3(Object.assign({}, defaultS3Options, S3Options))
   }
 
