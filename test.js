@@ -72,3 +72,20 @@ test('no bucket', async t => {
 
   AWSMock.restore('S3')
 })
+
+test('S3 options', async t => {
+  const source = { bucket, key }
+  const S3Options = {
+    accessKeyId: 'ACCESSKEYID',
+    secretAccessKey: 'SECRETACCESSKEY',
+    region: 'test-region',
+    endpoint: 'test.endpoint.com'
+  }
+
+  const { s3 } = new S3Adapter(source, S3Options)
+
+  t.is(s3.config.region, 'test-region')
+  t.is(s3.config.endpoint.host, 'test.endpoint.com')
+  t.is(s3.config.accessKeyId, 'ACCESSKEYID')
+  t.is(s3.config.secretAccessKey, 'SECRETACCESSKEY')
+})
