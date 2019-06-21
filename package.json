@@ -16,6 +16,11 @@
   "files": [
     "index.js"
   ],
+  "keywords": [
+    "lowdb",
+    "amazon",
+    "s3"
+  ],
   "ava": {
     "serial": true
   },
