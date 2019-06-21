@@ -4,6 +4,7 @@
   "description": "Lowdb AWS S3 Adapter",
   "license": "MIT",
   "main": "index.js",
+  "repository": "sadorlovsky/lowdb-s3",
   "author": {
     "name": "Zach Orlovsky",
     "email": "sadorlovsky@gmail.com",
