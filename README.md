@@ -1,6 +1,6 @@
 # lowdb-s3
 
-> Lowdb AWS S3 Adapter
+> lowdb AWS S3 adapter
 
 ## Usage
 
