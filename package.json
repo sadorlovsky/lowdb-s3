@@ -25,12 +25,12 @@
     "serial": true
   },
   "dependencies": {
-    "aws-sdk": "^2.614.0",
+    "aws-sdk": "^2.783.0",
     "lowdb": "^1.0.0"
   },
   "devDependencies": {
-    "ava": "^3.2.0",
-    "aws-sdk-mock": "^5.0.0",
-    "standard": "^14.3.1"
+    "ava": "^3.13.0",
+    "aws-sdk-mock": "^5.1.0",
+    "standard": "^16.0.1"
   }
 }
