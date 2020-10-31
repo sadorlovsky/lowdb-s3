@@ -1,6 +1,6 @@
 {
   "name": "@sadorlovsky/lowdb-s3",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "lowdb AWS S3 adapter",
   "license": "MIT",
   "main": "index.js",
