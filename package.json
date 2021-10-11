@@ -1,36 +1,55 @@
 {
-  "name": "@sadorlovsky/lowdb-s3",
-  "version": "1.0.3",
-  "description": "lowdb AWS S3 adapter",
-  "license": "MIT",
-  "main": "index.js",
-  "repository": "sadorlovsky/lowdb-s3",
-  "author": {
-    "name": "Zach Orlovsky",
-    "email": "sadorlovsky@gmail.com",
-    "url": "https://orlovsky.dev"
-  },
-  "scripts": {
-    "test": "standard && ava"
-  },
-  "files": [
-    "index.js"
-  ],
-  "keywords": [
-    "lowdb",
-    "amazon",
-    "s3"
-  ],
-  "ava": {
-    "serial": true
-  },
-  "dependencies": {
-    "aws-sdk": "^2.783.0",
-    "lowdb": "^1.0.0"
-  },
-  "devDependencies": {
-    "ava": "^3.13.0",
-    "aws-sdk-mock": "^5.1.0",
-    "standard": "^16.0.1"
-  }
+	"name": "@sadorlovsky/lowdb-s3",
+	"version": "2.0.0",
+	"description": "lowdb AWS S3 adapter",
+	"license": "MIT",
+	"type": "module",
+	"main": "./lib/index.js",
+	"exports": "./lib/index.js",
+	"types": "./lib/index.d.ts",
+	"engines": {
+		"node": ">=14"
+	},
+	"repository": "sadorlovsky/lowdb-s3",
+	"author": {
+		"name": "Zach Orlovsky",
+		"email": "sadorlovsky@gmail.com",
+		"url": "https://orlovsky.dev"
+	},
+	"scripts": {
+		"build": "del-cli lib && tsc",
+		"test": "xo && npm run build && ava"
+	},
+	"keywords": [
+		"lowdb",
+		"amazon",
+		"s3"
+	],
+	"ava": {
+		"serial": true,
+		"extensions": {
+			"ts": "module"
+		},
+		"nodeArguments": [
+			"--loader=ts-node/esm"
+		]
+	},
+	"dependencies": {
+		"@aws-sdk/client-s3": "^3.36.0"
+	},
+	"peerDependencies": {
+		"lowdb": "3.x"
+	},
+	"devDependencies": {
+		"@sindresorhus/tsconfig": "^2.0.0",
+		"@types/node": "^16.10.3",
+		"ava": "^4.0.0-alpha.2",
+		"aws-sdk-client-mock": "^0.5.5",
+		"del-cli": "^4.0.1",
+		"lowdb": "^3.0.0",
+		"tempy": "^2.0.0",
+		"ts-node": "^10.3.0",
+		"typescript": "^4.4.3",
+		"xo": "^0.45.0"
+	}
 }
