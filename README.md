@@ -9,7 +9,7 @@ Requires [lowdb@1.0](https://github.com/typicode/lowdb/tree/v1.0.0).
 ## Usage
 
 ```bash
-npm install @sadorlovsky/lowdb-s3
+npm install @sadorlovsky/lowdb-s3@1
 ```
 
 ```js
