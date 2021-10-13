@@ -1,6 +1,10 @@
 # lowdb-s3
 
-> lowdb AWS S3 adapter
+> Lowdb AWS S3 adapter
+
+Adapter for [lowdb](https://github.com/typicode/lowdb) which uses AWS S3 to store data.
+
+Requires lowdb >= 3.0
 
 ## Usage
 
@@ -16,7 +20,7 @@ const adapter = new S3Adapter({ bucket: 'bucket', key: 'db.json' });
 const db = new Low(adapter);
 ```
 
-You can pass S3 options
+Custom S3 config
 
 ```js
 import { Low } from 'lowdb';
