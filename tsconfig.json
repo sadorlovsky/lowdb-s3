@@ -1,0 +1,12 @@
+{
+	"extends": "@sindresorhus/tsconfig/tsconfig.json",
+	"compilerOptions": {
+		"outDir": "./lib",
+		"target": "ES2020",
+		"useDefineForClassFields": false,
+		"allowSyntheticDefaultImports": true,
+	},
+	"include": [
+		"source"
+	]
+}

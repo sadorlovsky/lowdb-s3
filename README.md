@@ -4,35 +4,56 @@
 
 Adapter for [lowdb](https://github.com/typicode/lowdb) which uses AWS S3 to store data.
 
-Requires [lowdb@1.0](https://github.com/typicode/lowdb/tree/v1.0.0).
+Requires lowdb >= 3.0
 
 ## Usage
 
 ```bash
-npm install @sadorlovsky/lowdb-s3@1
+yarn add @sadorlovsky/lowdb-s3
 ```
 
 ```js
-const low = require('lowdb')
-const S3 = require('@sadorlovsky/lowdb-s3')
+import { Low } from 'lowdb';
+import { S3Adapter } from '@sadorlovsky/lowdb-s3';
 
-const adapter = new S3({ bucket: 'bucket', key: 'db.json' })
-const db = await low(adapter)
+const adapter = new S3Adapter({ bucket: 'bucket', key: 'db.json' });
+const db = new Low(adapter);
 ```
 
 Custom S3 config
 
 ```js
-const low = require('lowdb')
-const S3 = require('@sadorlovsky/lowdb-s3')
+import { Low } from 'lowdb';
+import { S3Adapter } from '@sadorlovsky/lowdb-s3';
 
-const adapter = new S3({ bucket: 'bucket', key: 'db.json' }, {
-  accessKeyId: 'ACCESS_KEY_ID',
-  secretAccessKey: 'SECRET_ACCESS_KEY',
+const adapter = new S3Adapter({ bucket: 'bucket', key: 'db.json' }, {
+  credentials: {
+    accessKeyId: 'ACCESS_KEY_ID',
+    secretAccessKey: 'SECRET_ACCESS_KEY',
+  },
   region: 'custom-region',
-  endpoint: 'custom.endpoint.com'
-})
-const db = await low(adapter)
+  endpoint: 'https://custom.endpoint.com'
+});
+const db = new Low(adapter);
+```
+
+TypeScript usage
+
+```ts
+import { Low } from 'lowdb';
+import { S3Adapter } from '@sadorlovsky/lowdb-s3';
+
+interface User {
+  id: number;
+  name: string;
+}
+
+interface Data {
+  users: User[];
+}
+
+const adapter = new S3Adapter<Data>({ bucket: 'bucket', key: 'db.json' });
+const db = new Low(adapter);
 ```
 
 ## License
