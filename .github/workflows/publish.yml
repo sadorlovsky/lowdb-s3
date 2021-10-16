@@ -1,9 +1,7 @@
-name: Node.js CI
+name: Publish
 
 on:
   push:
-    branches: [main]
-  pull_request:
     branches: [main]
 
 jobs:
@@ -19,7 +17,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: yarn install --frozen-lockfile
-    - run: yarn test
+    - run: yarn build
   publish:
     runs-on: ubuntu-latest
     needs: build
@@ -32,3 +30,4 @@ jobs:
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
+          dry-run: true
